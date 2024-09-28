@@ -35,6 +35,16 @@ router.post("/workshops", workshops.add);
 router.put("/workshops/:id", workshops.edit);
 router.delete("/workshops/:id", workshops.destroy);
 
+// **MEDIA** \\
+const media = require("./controllers/mediaActions");
+
+router.get("/medias", media.browse);
+router.get("/medias/:id", media.read);
+router.post("/medias", media.add);
+router.put("/medias/:id", media.edit);
+router.delete("/medias/:id", media.destroy);
+
+
 /* ************************************************************************* */
 
 module.exports = router;

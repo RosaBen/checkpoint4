@@ -28,8 +28,6 @@ CREATE TABLE attending (
     workshopId INT NOT NULL
 );
 
-CREATE TABLE level (level VARCHAR(100) NOT NULL);
-
 CREATE TABLE instructor (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     lastname VARCHAR(100) NOT NULL,

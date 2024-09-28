@@ -50,7 +50,7 @@ const edit = async (req, res, next) => {
         await tables.instructor.update(instructor);
         res
             .status(204)
-            .send(`élève modifié avec succès: { id:${req.params.id} }`);
+            .send(`instructeur modifié avec succès: { id:${req.params.id} }`);
     } catch (err) {
         next(err);
     }
@@ -66,7 +66,7 @@ const add = async (req, res, next) => {
             instructor.picture = req.file.filename;
         }
         const result = await tables.instructor.create(instructor);
-        res.status(201).send(`élève ajouté avec succès: #{ id:${result} }`);
+        res.status(201).send(`instructeur ajouté avec succès: #{ id:${result} }`);
     } catch (err) {
         next(err);
     }
@@ -78,7 +78,7 @@ const destroy = async (req, res, next) => {
     try {
         await tables.instructor.delete(req.params.id);
         res.status(204)
-            .send("élève supprimé avec succès");
+            .send("instructeur supprimé avec succès");
     } catch (err) {
         next(err);
     }
