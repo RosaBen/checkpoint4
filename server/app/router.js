@@ -26,6 +26,15 @@ router.post("/instructors", instructors.add);
 router.put("/instructors/:id", instructors.edit);
 router.delete("/instructors/:id", instructors.destroy);
 
+// **WORKSHOPS** \\
+const workshops = require("./controllers/workshopActions");
+
+router.get("/workshops", workshops.browse);
+router.get("/workshops/:id", workshops.read);
+router.post("/workshops", workshops.add);
+router.put("/workshops/:id", workshops.edit);
+router.delete("/workshops/:id", workshops.destroy);
+
 /* ************************************************************************* */
 
 module.exports = router;
