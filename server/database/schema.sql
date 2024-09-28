@@ -1,30 +1,34 @@
-CREATE TABLE Student (
+USE 4checkpoint;
+
+CREATE TABLE student (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     lastname VARCHAR(100) NOT NULL,
     firstname VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     phone VARCHAR(100) NOT NULL,
-    level VARCHAR(100) NOT NULL
+    level ENUM(
+        'beginner',
+        'intermediate',
+        'advanced'
+    )
 );
 
-CREATE TABLE Class (
+CREATE TABLE workshop (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     location text NOT NULL,
-    DATE DATE NOT NULL,
+    workshopDate DATE NOT NULL,
     duration INT NOT NULL,
-    TIME TIME NOT NULL,
+    workshopTime TIME NOT NULL,
     capacity INT
 );
 
 CREATE TABLE attending (
-    PRIMARY KEY (studentId, classId),
+    PRIMARY KEY (studentId, workshopId),
     studentId INT NOT NULL,
-    classId INT NOT NULL
+    workshopId INT NOT NULL
 );
 
-CREATE TABLE Level (level VARCHAR(100) NOT NULL);
-
-CREATE TABLE Instructor (
+CREATE TABLE instructor (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     lastname VARCHAR(100) NOT NULL,
     firstname VARCHAR(100) NOT NULL,
@@ -34,9 +38,14 @@ CREATE TABLE Instructor (
     picture TEXT
 );
 
-CREATE TABLE Media (
+CREATE TABLE media (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
+    type ENUM(
+        'tutorial',
+        'évènement',
+        'photo',
+        'vidéo'
+    ),
     description TEXT,
     url TEXT
 );
@@ -48,15 +57,15 @@ CREATE TABLE posting (
 );
 
 ALTER TABLE attending
-ADD FOREIGN KEY (studentId) REFERENCES Student (id);
+ADD FOREIGN KEY (studentId) REFERENCES student (id);
 
 ALTER TABLE attending
-ADD FOREIGN KEY (classId) REFERENCES Class (id);
+ADD FOREIGN KEY (workshopId) REFERENCES workshop (id);
 
-ALTER TABLE posting ADD FOREIGN KEY (mediaId) REFERENCES Media (id);
+ALTER TABLE posting ADD FOREIGN KEY (mediaId) REFERENCES media (id);
 
 ALTER TABLE posting
-ADD FOREIGN KEY (instructorId) REFERENCES Instructor (id);
+ADD FOREIGN KEY (instructorId) REFERENCES instructor (id);
 
 INSERT INTO
     student (
@@ -82,11 +91,11 @@ VALUES (
     );
 
 INSERT INTO
-    class (
+    workshop (
         location,
-        DATE,
+        workshopDate,
         duration,
-        TIME,
+        workshopTime,
         capacity
     )
 VALUES (
@@ -131,20 +140,14 @@ VALUES (
     );
 
 INSERT INTO
-    media (name, description, url)
+    media (type, description, url)
 VALUES (
-        'Dance',
+        'tutorial',
         'Dance video',
         'https://picsum.photos/id/237/200/300 '
     ),
     (
-        'Dance',
+        'photo',
         'Dance video',
         'https://picsum.photos/id/237/200/300 '
     );
-
-INSERT INTO
-    level (level)
-VALUES ('Beginner'),
-    ('Intermediate'),
-    ('Advanced');
