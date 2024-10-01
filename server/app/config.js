@@ -33,6 +33,7 @@ app.use(
   cors({
     origin:
       process.env.CLIENT_URL,
+    // credentials: true,
   })
 );
 
@@ -105,8 +106,8 @@ app.use("/api", router);
 // 2. Ensure that the `reactBuildPath` points to the correct directory where your client's build artifacts are located.
 
 
-const publicFolderPath = path.join(__dirname, "/../public");
-app.get("*.*", express.static(publicFolderPath, { maxAge: "1y" }));
+const publicFolderPath = path.join(__dirname, "/../public/assets");
+app.use("/assets", express.static(publicFolderPath, { maxAge: "1y" }));
 /*
 
 

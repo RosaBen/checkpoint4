@@ -6,6 +6,7 @@ const router = express.Router();
 // Define Your API Routes Here
 /* ************************************************************************* */
 
+const upload = require("./services/upload");
 
 // **STUDENTS** \\
 const students = require("./controllers/studentActions");
@@ -40,7 +41,7 @@ const media = require("./controllers/mediaActions");
 
 router.get("/medias", media.browse);
 router.get("/medias/:id", media.read);
-router.post("/medias", media.add);
+router.post("/medias", upload.uploadMedia, media.add);
 router.put("/medias/:id", media.edit);
 router.delete("/medias/:id", media.destroy);
 
