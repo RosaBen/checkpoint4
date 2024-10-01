@@ -58,6 +58,10 @@ const add = async (req, res, next) => {
     const media = req.body;
 
     try {
+
+        if (req.file) {
+            media.url = req.file.filename;
+        }
         const result = await tables.media.create(media);
         res.status(201).send(`media ajouté avec succès: #{ id:${result} }`);
     } catch (err) {
