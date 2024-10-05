@@ -1,20 +1,22 @@
 const AbstractRepository = require("./AbstractRepository");
 
-class StudentRepository extends AbstractRepository {
+class LocationRepository extends AbstractRepository {
   constructor() {
-    super({ table: "student" });
+    super({ table: "location" });
   }
 
   // ***CREATE***\\
-  async create(student) {
+
+  async create(location) {
     const [result] = await this.database.query(
-      `insert into ${this.table} (firstname, lastname, email, phone, level) values (?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (room, capacity, address, city, postCode, country) values (?, ?,? ,?, ?, ?)`,
       [
-        student.firstname,
-        student.lastname,
-        student.email,
-        student.phone,
-        student.level,
+        location.room,
+        location.capacity,
+        location.address,
+        location.city,
+        location.postCode,
+        location.country,
       ]
     );
 
@@ -22,7 +24,6 @@ class StudentRepository extends AbstractRepository {
   }
 
   // ***READ***\\
-
   async read(id) {
     const [rows] = await this.database.query(
       `select * from ${this.table} where id = ?`,
@@ -37,26 +38,27 @@ class StudentRepository extends AbstractRepository {
     return rows;
   }
 
-  async readAllByLevel(level) {
+  async readAllByCity(city) {
     const [rows] = await this.database.query(
-      `select * from ${this.table} where level = ?`,
-      [level]
+      `select * from ${this.table} where city = ?`,
+      [city]
     );
 
     return rows;
   }
 
   // ***UPDATE***\\
-  async update(student) {
+  async update(location) {
     const [result] = await this.database.query(
-      `update ${this.table} set firstname = ?, lastname = ?, email = ?, phone = ? , level= ?  where id = ?`,
+      `update ${this.table} set room = ?, capacity = ?, address = ?, city = ?, postCode = ?, country = ? where id = ?`,
       [
-        student.firstname,
-        student.lastname,
-        student.email,
-        student.phone,
-        student.level,
-        student.id,
+        location.room,
+        location.capacity,
+        location.address,
+        location.city,
+        location.postCode,
+        location.country,
+        location.id,
       ]
     );
 
@@ -64,6 +66,7 @@ class StudentRepository extends AbstractRepository {
   }
 
   // ***DELETE***\\
+
   async delete(id) {
     const [result] = await this.database.query(
       `delete from ${this.table} where id = ?`,
@@ -74,4 +77,4 @@ class StudentRepository extends AbstractRepository {
   }
 }
 
-module.exports = StudentRepository;
+module.exports = LocationRepository;

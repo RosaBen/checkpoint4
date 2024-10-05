@@ -1,89 +1,122 @@
 const AbstractRepository = require("./AbstractRepository");
 
 class WorkshopRepository extends AbstractRepository {
-    constructor() {
-        // Call the constructor of the parent class (AbstractRepository)
-        // and pass the table name "workshop" as configuration
-        super({ table: "workshop" });
-    }
+  constructor() {
+    super({ table: "workshop" });
+  }
 
-    // The C of CRUD - Create operation
+  // ***CREATE***\\
+  async create(workshop) {
+    const [result] = await this.database.query(
+      `insert into ${this.table} (workshopDate, duration,workshopTime,description,level,locationId) 
+            values (STR_TO_DATE(?, '%Y-%m-%d'),?,STR_TO_DATE(?, '%H:%i:%s'),?,?,?)
+            `,
+      [
+        workshop.workshopDate,
+        workshop.duration,
+        workshop.workshopTime,
+        workshop.description,
+        workshop.level,
+        workshop.locationId,
+      ]
+    );
 
-    async create(workshop) {
-        // Execute the SQL INSERT query to add a new workshop to the "workshop" table
-        const [result] = await this.database.query(
-            `insert into ${this.table} (location, workshopDate, duration,workshopTime, capacity ) 
-            values (?, STR_TO_DATE(?, '%d-%m-%Y'),?,STR_TO_DATE(?, '%H:%i'),?)`,
-            [workshop.location, workshop.workshopDate, workshop.duration, workshop.workshopTime, workshop.capacity, workshop.id]
-        );
+    return result.insertId;
+  }
 
-        // Return the ID of the newly inserted workshop
-        return result.insertId;
-    }
-
-    // The Rs of CRUD - Read operations
-
-    async read(id) {
-        // Execute the SQL SELECT query to retrieve a specific workshop by its ID
-        const [rows] = await this.database.query(
-            `select             location,
-            DATE_FORMAT(workshopDate,'%d-%m-%Y') as dateFR,
+  // ***READ***\\
+  async read(id) {
+    const [rows] = await this.database.query(
+      `select       
+            DATE_FORMAT(workshopDate,'%W %d %M %Y') as workshopDate,
             duration,
-            DATE_FORMAT(workshopTime,'%H:%i') as timeFR,
-            capacity from ${this.table} where id = ?`,
-            [id]
-        );
+            DATE_FORMAT(workshopTime,'%Hh%i') as workshopTime,
+            description,
+            level,
+            locationId
+            from ${this.table} where id = ?`,
+      [id]
+    );
 
-        // Return the first row of the result, which represents the workshop
-        return rows[0];
+    return rows[0];
+  }
+
+  async readAll(level, workshopDate) {
+    let query = `select
+        DATE_FORMAT(workshopDate,'%W %d %M %Y') as workshopDate,
+        duration,
+        DATE_FORMAT(workshopTime,'%Hh%i') as workshopTime,
+        description,
+        level,
+        locationId
+        from ${this.table}`;
+
+    const values = [];
+
+    const conditions = [];
+
+    if (level) {
+      conditions.push("level = ?");
+      values.push(level);
     }
 
-    async readAll() {
-        // Execute the SQL SELECT query to retrieve all workshops from the "workshop" table
-        const [rows] = await this.database.query(`
-        SELECT 
-            location, 
-            DATE_FORMAT(workshopDate,'%d-%m-%Y') as dateFR, 
-            duration, 
-            DATE_FORMAT(workshopTime,'%H:%i') as timeFR, 
-            capacity
-        FROM ${this.table}
-    `);
-
-        // Return the array of workshops
-        return rows;
+    if (workshopDate) {
+      conditions.push("workshopDate = STR_TO_DATE(?, '%Y-%m-%d')");
+      values.push(workshopDate);
     }
 
-
-    async update(workshop) {
-        const [result] = await this.database.query(
-            `update ${this.table} set location = ?, 
-            workshopDate = STR_TO_DATE(?, '%d-%m-%Y'), 
-            duration = ?, 
-            workshopTime = STR_TO_DATE(?, '%H:%i'), 
-            capacity= ?  
-            where id = ?`,
-            [workshop.location,
-            workshop.workshopDate,
-            workshop.duration,
-            workshop.workshopTime,
-            workshop.capacity,
-            workshop.id]
-        );
-
-        // Return the number of affected rows
-        return result.affectedRows;
+    if (conditions.length > 0) {
+      query += ` where ${conditions.join(" or ")}`;
     }
 
-    async delete(id) {
-        const [result] = await this.database.query(
-            `delete from ${this.table} where id = ?`,
-            [id]
-        );
+    const [rows] = await this.database.query(query, values);
+    return rows;
+  }
 
-        // Return the number of affected rows
-        return result.affectedRows;
-    }
+  async readAllByDate(workshopDate) {
+    const [rows] = await this.database.query(
+      `select 
+        DATE_FORMAT(workshopDate,'%W %d %M %Y') as workshopDate,
+        duration,
+        DATE_FORMAT(workshopTime,'%Hh%i') as workshopTime,
+        description,
+        level,
+        locationId
+        from ${this.table} where workshopDate = (STR_TO_DATE(?, '%Y-%m-%d'))`,
+      [workshopDate]
+    );
+
+    return rows;
+  }
+
+  // ***UPDATE***\\
+  async update(workshop) {
+    const [result] = await this.database.query(
+      `update ${this.table} set workshopDate = STR_TO_DATE(?, '%Y-%m-%d'), duration = ?, workshopTime = STR_TO_DATE(?, '%H:%i:%s'), description = ?, level = ?, locationId = ? where id = ?`,
+      [
+        workshop.workshopDate,
+        workshop.duration,
+        workshop.workshopTime,
+        workshop.description,
+        workshop.level,
+        workshop.locationId,
+        workshop.id,
+      ]
+    );
+
+    return result.affectedRows;
+  }
+
+  // ***DELETE***\\
+
+  async delete(id) {
+    const [result] = await this.database.query(
+      `delete from ${this.table} where id = ? `,
+      [id]
+    );
+
+    return result.affectedRows;
+  }
 }
 
 module.exports = WorkshopRepository;
