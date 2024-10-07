@@ -31,8 +31,8 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin:
-      process.env.CLIENT_URL,
+    origin: process.env.CLIENT_URL,
+    allowedHeaders: ["Content-Type", "Authorization"],
     // credentials: true,
   })
 );
@@ -104,7 +104,6 @@ app.use("/api", router);
 // To enable production configuration:
 // 1. Uncomment the lines related to serving static files and redirecting unhandled requests.
 // 2. Ensure that the `reactBuildPath` points to the correct directory where your client's build artifacts are located.
-
 
 const publicFolderPath = path.join(__dirname, "/../public/assets");
 app.use("/assets", express.static(publicFolderPath, { maxAge: "1y" }));

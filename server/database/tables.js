@@ -1,8 +1,7 @@
 // Import the repository modules responsible for handling data operations on the tables
 const StudentRepository = require("./models/StudentRepository");
-const InstructorRepository = require("./models/InstructorRepository");
 const WorkshopRepository = require("./models/WorkshopRepository");
-const MediaRepository = require("./models/MediaRepository");
+const LocationRepository = require("./models/LocationRepository");
 
 // Create an empty object to hold data repositories for different tables
 const tables = {};
@@ -13,9 +12,8 @@ const tables = {};
 
 // Register each repository as data access point for its table
 tables.student = new StudentRepository();
-tables.instructor = new InstructorRepository();
+tables.location = new LocationRepository();
 tables.workshop = new WorkshopRepository();
-tables.media = new MediaRepository();
 
 /* ************************************************************************* */
 
