@@ -6,7 +6,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
-import { getWorkshops } from "./services/request";
+import { getStudents, getWorkshops } from "./services/request";
+import Dashboard from "./pages/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,11 @@ const router = createBrowserRouter([
           const result = await getWorkshops(level, workshopDate);
           return result;
         },
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+        loader: getStudents,
       },
     ],
   },

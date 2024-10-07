@@ -3,6 +3,7 @@ import WorkshopCard from "../components/WorkshopCard";
 
 export default function Booking() {
   const workshops = useLoaderData();
+
   const navigate = useNavigate();
 
   const handleChangeLevel = (e) => {
@@ -14,7 +15,7 @@ export default function Booking() {
   };
 
   return (
-    <div>
+    <div className="bookingPage">
       <h1>Réservation</h1>
 
       <select onChange={handleChangeLevel}>

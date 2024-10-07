@@ -49,7 +49,9 @@ class WorkshopRepository extends AbstractRepository {
         description,
         level,
         locationId
-        from ${this.table}`;
+        from ${this.table}
+        inner join location on ${this.table}.locationId = location.id
+        `;
 
     const values = [];
 
