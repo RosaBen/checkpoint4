@@ -52,28 +52,29 @@ class WorkshopRepository extends AbstractRepository {
         from ${this.table}
         inner join location on ${this.table}.locationId = location.id
         `;
-
+  
     const values = [];
-
+  
     const conditions = [];
-
+  
     if (level) {
       conditions.push("level = ?");
       values.push(level);
     }
-
+  
     if (workshopDate) {
       conditions.push("workshopDate = STR_TO_DATE(?, '%Y-%m-%d')");
       values.push(workshopDate);
     }
-
+  
     if (conditions.length > 0) {
-      query += ` where ${conditions.join(" or ")}`;
+      query += ` where ${conditions.join(" and ")}`;
     }
-
+  
     const [rows] = await this.database.query(query, values);
     return rows;
   }
+  
 
   async readAllByDate(workshopDate) {
     const [rows] = await this.database.query(

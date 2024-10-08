@@ -19,7 +19,7 @@ export default function WorkshopCard({ workshop }) {
       }
     }
 
-    fetchLocations(); // Appel de la fonction asynchrone
+    fetchLocations();
   }, []);
 
   if (loading) {
@@ -28,23 +28,23 @@ export default function WorkshopCard({ workshop }) {
 
   return (
     <div>
-      <h2>{workshop.workshopDate}</h2>
-      <p>{workshop.duration}</p>
-      <p>{workshop.workshopTime}</p>
-      <p>{workshop.description}</p>
-      <p>{workshop.level}</p>
+<div>      <h2>{workshop.level}</h2>
+<h2>{workshop.workshopDate}</h2></div>
+      <p><strong>Durée:</strong> {workshop.duration} mn</p>
+      <p><strong>Heure: </strong>{workshop.workshopTime}</p>
+      <p><strong>Description:</strong> {workshop.description}</p>
       <div>
         {locations.map((location) => {
           if (location.id === workshop.locationId) {
             return (
               <div key={location.id}>
-                <p>{location.room}</p>
+                <p><strong>Situé:</strong> {location.room}</p>
                 <p>{location.address}</p>
                 <p>
-                  {location.postCode}-{location.city}
+                  {location.postCode} - {location.city}
                 </p>
                 <p>{location.country}</p>
-                <p>capacité: {location.capacity}</p>
+                <p><strong> Capacité de l'endroit: </strong> {location.capacity} places</p>
               </div>
             );
           }
