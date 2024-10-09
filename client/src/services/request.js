@@ -2,16 +2,16 @@ import myAxios from "./instanceAxios";
 
 // ##### *** GET *** ##### \\
 
-export function getWorkshops(level, workshopDate) {
-  const params = new URLSearchParams();
-  if (level) {
-    params.append("level", level);
-  }
-  if (workshopDate) {
-    params.append("workshopDate", workshopDate);
-  }
+export function getWorkshops() {
   return myAxios
-    .get(`/workshops?${params.toString()}`)
+    .get("/workshops")
+    .then((response) => response.data.result)
+    .catch((error) => console.info(error));
+}
+
+export function getWorkshopByLevel(level) {
+  return myAxios
+    .get(`/workshops?level=${level}`)
     .then((response) => response.data.result)
     .catch((error) => console.info(error));
 }

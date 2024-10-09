@@ -27,30 +27,50 @@ export default function WorkshopCard({ workshop }) {
   }
 
   return (
-    <div>
-<div>      <h2>{workshop.level}</h2>
-<h2>{workshop.workshopDate}</h2></div>
-      <p><strong>Durée:</strong> {workshop.duration} mn</p>
-      <p><strong>Heure: </strong>{workshop.workshopTime}</p>
-      <p><strong>Description:</strong> {workshop.description}</p>
-      <div>
-        {locations.map((location) => {
-          if (location.id === workshop.locationId) {
-            return (
-              <div key={location.id}>
-                <p><strong>Situé:</strong> {location.room}</p>
-                <p>{location.address}</p>
-                <p>
-                  {location.postCode} - {location.city}
-                </p>
-                <p>{location.country}</p>
-                <p><strong> Capacité de l'endroit: </strong> {location.capacity} places</p>
-              </div>
-            );
-          }
-          return null;
-        })}
-      </div>
+    <div className="workshopContainer">
+      <section className="workshopLevel">
+        <div className="workshopPrincipal">
+          <p>
+            <strong>Niveau:</strong> {workshop.level}
+          </p>
+          <p>
+            <strong>Durée:</strong> {workshop.duration} mn
+          </p>
+          <p>
+            <strong>Heure: </strong>
+            {workshop.workshopTime}
+          </p>
+          <p>
+            <strong>Description:</strong> {workshop.description}
+          </p>
+        </div>
+        <div className="workshopLocation">
+          {locations.map((location) => {
+            if (location.id === workshop.locationId) {
+              return (
+                <div key={location.id}>
+                  <p>
+                    <strong>Situé:</strong> {location.room}
+                  </p>
+                  <p>{location.address}</p>
+                  <p>
+                    {location.postCode} - {location.city}
+                  </p>
+                  <p>{location.country}</p>
+                  <p>
+                    <strong> Capacité de l'endroit: </strong>{" "}
+                    {location.capacity} places
+                  </p>
+                </div>
+              );
+            }
+            return null;
+          })}
+        </div>
+      </section>
+      <section className="workshopCalendar">
+        <h2>{workshop.workshopDate}</h2>
+      </section>
     </div>
   );
 }
