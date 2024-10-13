@@ -6,7 +6,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
-import { getStudents, getWorkshops} from "./services/request";
+import {
+  getStudents,
+  getWorkshopByLevel,
+  getWorkshops,
+} from "./services/request";
 import Dashboard from "./pages/Dashboard";
 
 const router = createBrowserRouter([
@@ -20,13 +24,13 @@ const router = createBrowserRouter([
       {
         path: "/booking",
         element: <Booking />,
-        loader: async ({ request }) => {
+        loader: ({ request }) => {
           const url = new URL(request.url);
           const level = url.searchParams.get("level");
-          const location = url.searchParams.get("location");
-          const workshopDate = url.searchParams.get("workshopDate");
-          const result = await getWorkshops(level, workshopDate, location);
-          return result;
+          if (!level || level === "all") {
+            return getWorkshops() || [];
+          }
+          return getWorkshopByLevel(level) || [];
         },
       },
       {
