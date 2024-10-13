@@ -42,8 +42,16 @@ export function addWorkshop(workshop) {
 // ##### *** EDIT *** ##### \\
 
 export function editWorkshop(workshop) {
+  if (!workshop || !workshop.id) {
+    console.error("Invalid workshop data: ", workshop);
+    return Promise.reject(new Error("Invalid workshop data"));
+  }
   return myAxios
-    .put(`/workshops/${workshop.id}`, workshop)
+    .put(`/workshops/${workshop.id}`, workshop, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
     .then((response) => response.data)
     .catch((error) => console.info(error));
 }
