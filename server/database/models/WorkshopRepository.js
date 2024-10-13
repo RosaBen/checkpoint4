@@ -8,14 +8,12 @@ class WorkshopRepository extends AbstractRepository {
   // ***CREATE***\\
   async create(workshop) {
     const [result] = await this.database.query(
-      `insert into ${this.table} (workshopDate, duration,workshopTime,description,level,locationId) 
-            values (STR_TO_DATE(?, '%Y-%m-%d'),?,STR_TO_DATE(?, '%H:%i:%s'),?,?,?)
-            `,
+      `INSERT INTO ${this.table} (workshopDate, duration, workshopTime, level, locationId) 
+       VALUES (STR_TO_DATE(?, '%Y-%m-%d'), ?, STR_TO_DATE(?, '%H:%i:%s'), ?, ?);`,
       [
         workshop.workshopDate,
         workshop.duration,
         workshop.workshopTime,
-        workshop.description,
         workshop.level,
         workshop.locationId,
       ]
@@ -27,34 +25,35 @@ class WorkshopRepository extends AbstractRepository {
   // ***READ***\\
   async read(id) {
     const [rows] = await this.database.query(
-      `select       
-            DATE_FORMAT(workshopDate,'%W %d %M %Y') as workshopDate,
-            duration,
-            DATE_FORMAT(workshopTime,'%Hh%i') as workshopTime,
-            description,
-            level,
-            locationId
-            from ${this.table} where id = ?`,
+      `SELECT       
+        DATE_FORMAT(workshopDate, '%W %d %M %Y') as workshopDate,
+        duration,
+        DATE_FORMAT(workshopTime, '%Hh%i') as workshopTime,
+        level,
+        locationId,
+        workshop.id
+      FROM ${this.table}
+      WHERE id = ?;`,
       [id]
     );
 
     return rows[0];
   }
 
+  // ***READ ALL WITH FILTERS (DATE & LEVEL)***\\
   async readAll(level, workshopDate) {
-    let query = `select
-        DATE_FORMAT(workshopDate,'%W %d %M %Y') as workshopDate,
+    let query = `
+      SELECT
+        DATE_FORMAT(workshopDate, '%W %d %M %Y') as workshopDate,
         duration,
-        DATE_FORMAT(workshopTime,'%Hh%i') as workshopTime,
-        description,
+        DATE_FORMAT(workshopTime, '%Hh%i') as workshopTime,
         level,
-        locationId
-        from ${this.table}
-        inner join location on ${this.table}.locationId = location.id
-        `;
+        locationId,
+        workshop.id
+      FROM ${this.table}
+      INNER JOIN location ON ${this.table}.locationId = location.id`;
 
     const values = [];
-
     const conditions = [];
 
     if (level) {
@@ -68,23 +67,25 @@ class WorkshopRepository extends AbstractRepository {
     }
 
     if (conditions.length > 0) {
-      query += ` where ${conditions.join(" and ")}`;
+      query += ` WHERE ${conditions.join(" AND ")}`;
     }
 
     const [rows] = await this.database.query(query, values);
     return rows;
   }
 
+  // ***READ BY DATE***\\
   async readAllByDate(workshopDate) {
     const [rows] = await this.database.query(
-      `select 
-        DATE_FORMAT(workshopDate,'%W %d %M %Y') as workshopDate,
+      `SELECT 
+        DATE_FORMAT(workshopDate, '%W %d %M %Y') as workshopDate,
         duration,
-        DATE_FORMAT(workshopTime,'%Hh%i') as workshopTime,
-        description,
+        DATE_FORMAT(workshopTime, '%Hh%i') as workshopTime,
         level,
-        locationId
-        from ${this.table} where workshopDate = (STR_TO_DATE(?, '%Y-%m-%d'))`,
+        locationId,
+        workshop.id
+      FROM ${this.table}
+      WHERE workshopDate = STR_TO_DATE(?, '%Y-%m-%d');`,
       [workshopDate]
     );
 
@@ -94,12 +95,17 @@ class WorkshopRepository extends AbstractRepository {
   // ***UPDATE***\\
   async update(workshop) {
     const [result] = await this.database.query(
-      `update ${this.table} set workshopDate = STR_TO_DATE(?, '%Y-%m-%d'), duration = ?, workshopTime = STR_TO_DATE(?, '%H:%i:%s'), description = ?, level = ?, locationId = ? where id = ?`,
+      `UPDATE ${this.table}
+       SET workshopDate = STR_TO_DATE(?, '%Y-%m-%d'), 
+           duration = ?, 
+           workshopTime = STR_TO_DATE(?, '%H:%i:%s'), 
+           level = ?, 
+           locationId = ? 
+       WHERE id = ?;`,
       [
         workshop.workshopDate,
         workshop.duration,
         workshop.workshopTime,
-        workshop.description,
         workshop.level,
         workshop.locationId,
         workshop.id,
@@ -110,10 +116,9 @@ class WorkshopRepository extends AbstractRepository {
   }
 
   // ***DELETE***\\
-
   async delete(id) {
     const [result] = await this.database.query(
-      `delete from ${this.table} where id = ? `,
+      `DELETE FROM ${this.table} WHERE id = ?;`,
       [id]
     );
 

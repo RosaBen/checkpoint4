@@ -1,7 +1,9 @@
+CREATE DATABASE IF NOT EXISTS 4checkpoint;
+
 USE 4checkpoint;
 
 CREATE TABLE student (
-    id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id int PRIMARY KEY AUTO_INCREMENT,
     lastname VARCHAR(100) NOT NULL,
     firstname VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -24,30 +26,29 @@ CREATE TABLE location (
 );
 
 CREATE TABLE workshop (
-    id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id int PRIMARY KEY AUTO_INCREMENT,
     workshopDate DATE NOT NULL,
     duration INT NOT NULL,
-    description TEXT,
     workshopTime TIME NOT NULL,
     level enum(
         'Débutant',
         'Intermédiaire',
         'Avancé'
     ) NOT NULL,
-    locationId INT NOT NULL
+    locationId INT
 );
 
 CREATE TABLE attending (
     PRIMARY KEY (studentId, workshopId),
-    studentId INT NOT NULL,
-    workshopId INT NOT NULL
+    studentId INT,
+    workshopId INT
 );
 
 ALTER TABLE attending
-ADD FOREIGN KEY (studentId) REFERENCES student (id);
+ADD FOREIGN KEY (studentId) REFERENCES student (id) ON DELETE CASCADE;
 
 ALTER TABLE attending
-ADD FOREIGN KEY (workshopId) REFERENCES workshop (id);
+ADD FOREIGN KEY (workshopId) REFERENCES workshop (id) ON DELETE CASCADE;
 
 INSERT INTO
     student (
@@ -109,31 +110,27 @@ INSERT INTO
     workshop (
         workshopDate,
         duration,
-        description,
         workshopTime,
         level,
         locationId
     )
 VALUES (
         '2021-12-01',
-        2,
-        'Introduction to programming',
+        60,
         '10:00:00',
         'Débutant',
         1
     ),
     (
         '2021-12-24',
-        3,
-        'Intermediate programming',
+        30,
         '11:00:00',
         'Intermédiaire',
         2
     ),
     (
         '2021-11-03',
-        4,
-        'Advanced programming',
+        45,
         '12:00:00',
         'Avancé',
         1

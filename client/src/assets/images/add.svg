@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1" id="gradient_1">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#D3D3D3" />
+    </linearGradient>
+    <linearGradient gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1" id="gradient_2">
+      <stop offset="23.595507%" stop-color="#2B2970" />
+      <stop offset="100%" stop-color="#CE812D" />
+    </linearGradient>
+  </defs>
+  <g id="Shape" fill-opacity="1">
+    <path d="M-1682 -1542L-1682 -1542L-1682 -1518L-1706 -1518L-1706 -1542L-1682 -1542Z" id="Shape" fill="url(#gradient_1)" stroke="none" />
+    <path d="M12 0C5.38278 0 0 5.38278 0 12C0 18.6172 5.38278 24 12 24C18.6172 24 24 18.6172 24 12C24 5.38278 18.6172 0 12 0L12 0ZM18.2609 12.5217L12.5217 12.5217L12.5217 18.2609L11.4783 18.2609L11.4783 12.5217L5.73913 12.5217L5.73913 11.4783L11.4783 11.4783L11.4783 5.73913L12.5217 5.73913L12.5217 11.4783L18.2609 11.4783L18.2609 12.5217L18.2609 12.5217Z" id="Shape" fill="url(#gradient_2)" fill-rule="evenodd" stroke="none" />
+  </g>
+</svg>
