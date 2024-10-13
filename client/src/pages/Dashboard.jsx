@@ -17,35 +17,52 @@ export default function Dashboard() {
   } = useContext(WorkshopContext);
 
   const [showForm, setShowForm] = useState(false);
-  const [selectedWorkshop, setSelectedWorkshop] = useState(null);
   const [editWorkshop, setEditWorkshop] = useState(null);
+  const [workshopData, setWorkshopData] = useState({});
+  const [selectedWorkshop, setSelectedWorkshop] = useState(null);
 
   const handleAdd = () => {
-    setSelectedWorkshop(null);
     setShowForm(true);
+    setSelectedWorkshop(null);
   };
 
-  const handleEdit = (id) => {
-    setEditWorkshop(id);
+  const handleEdit = (workshop) => {
+    setEditWorkshop(workshop.id);
+    setWorkshopData({
+      workshopDate: workshop.workshopDate,
+      workshopTime: workshop.workshopTime,
+      duration: workshop.duration,
+      level: workshop.level,
+      locationId: workshop.locationId,
+    });
   };
 
   const handleSave = (id) => {
     const updatedWorkshop = {
+      ...workshopData,
       id,
-      workshopDate: document.getElementById(`date-${id}`).value,
-      workshopTime: document.getElementById(`time-${id}`).value,
-      duration: document.getElementById(`duration-${id}`).value,
-      level: document.getElementById(`level-${id}`).value,
-      locationId: document.getElementById(`location-${id}`).value,
+      workshopDate: new Date(workshopData.workshopDate)
+        .toISOString()
+        .split("T")[0],
     };
     handleUpdateWorkshop(updatedWorkshop);
     setEditWorkshop(null);
+    setWorkshopData({});
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setWorkshopData({
+      ...workshopData,
+      [name]: value,
+    });
   };
 
   const handleClose = () => {
     setShowForm(false);
-    setSelectedWorkshop(null);
     setEditWorkshop(null);
+    setSelectedWorkshop(null);
+    setWorkshopData({});
   };
 
   if (loading) return <p>Chargement...</p>;
@@ -82,7 +99,9 @@ export default function Dashboard() {
                     <input
                       id={`date-${workshop.id}`}
                       type="date"
-                      defaultValue={workshop.workshopDate}
+                      name="workshopDate"
+                      value={workshopData.workshopDate}
+                      onChange={handleInputChange}
                       aria-label="Date"
                     />
                   ) : (
@@ -94,7 +113,9 @@ export default function Dashboard() {
                     <input
                       id={`time-${workshop.id}`}
                       type="time"
-                      defaultValue={workshop.workshopTime}
+                      name="workshopTime"
+                      value={workshopData.workshopTime}
+                      onChange={handleInputChange}
                       aria-label="Heure"
                     />
                   ) : (
@@ -106,7 +127,9 @@ export default function Dashboard() {
                     <input
                       id={`duration-${workshop.id}`}
                       type="number"
-                      defaultValue={workshop.duration}
+                      name="duration"
+                      value={workshopData.duration}
+                      onChange={handleInputChange}
                       aria-label="Durée"
                     />
                   ) : (
@@ -117,7 +140,9 @@ export default function Dashboard() {
                   {editWorkshop === workshop.id ? (
                     <select
                       id={`level-${workshop.id}`}
-                      defaultValue={workshop.level}
+                      name="level"
+                      value={workshopData.level}
+                      onChange={handleInputChange}
                     >
                       <option value="Débutant">Débutant</option>
                       <option value="Intermédiaire">Intermédiaire</option>
@@ -132,8 +157,10 @@ export default function Dashboard() {
                     <input
                       id={`location-${workshop.id}`}
                       type="number"
-                      defaultValue={workshop.locationId}
+                      name="locationId"
+                      value={workshopData.locationId}
                       aria-label="Lieu"
+                      onChange={handleInputChange}
                     />
                   ) : (
                     workshop.locationId
@@ -161,7 +188,7 @@ export default function Dashboard() {
                     <button
                       type="button"
                       className="btnIcon"
-                      onClick={() => handleEdit(workshop.id)}
+                      onClick={() => handleEdit(workshop)}
                     >
                       <img src={Edit} alt="Modifier" />
                     </button>
@@ -174,26 +201,100 @@ export default function Dashboard() {
         <div className="cardsDashboard">
           {workshops.map((workshop) => (
             <div className="cardDashboard" key={workshop.id}>
-              <div className="cardTitle">Atelier ID: {workshop.id}</div>
-              <div className="cardContent">Date: {workshop.workshopDate}</div>
-              <div className="cardContent">Heure: {workshop.workshopTime}</div>
-              <div className="cardContent">Durée: {workshop.duration}</div>
-              <div className="cardContent">Niveau: {workshop.level}</div>
-              <div className="cardContent">Lieu: {workshop.locationId}</div>
+              <div className="cardTitle">Workshop: {workshop.id}</div>
+              <div className="cardContent">
+                {editWorkshop === workshop.id ? (
+                  <input
+                    id={`date-${workshop.id}`}
+                    type="date"
+                    name="workshopDate"
+                    value={workshopData.workshopDate}
+                    aria-label="Date"
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  <span>Date: {workshop.workshopDate}</span>
+                )}
+              </div>
+              <div className="cardContent">
+                {editWorkshop === workshop.id ? (
+                  <input
+                    id={`time-${workshop.id}`}
+                    type="time"
+                    name="workshopTime"
+                    value={workshopData.workshopTime}
+                    aria-label="Heure"
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  <span>Heure: {workshop.workshopTime}</span>
+                )}
+              </div>
+              <div className="cardContent">
+                {editWorkshop === workshop.id ? (
+                  <input
+                    id={`duration-${workshop.id}`}
+                    type="number"
+                    name="duration"
+                    value={workshopData.duration}
+                    aria-label="Durée"
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  <span>Durée: {workshop.duration}</span>
+                )}
+              </div>
+              <div className="cardContent">
+                {editWorkshop === workshop.id ? (
+                  <select
+                    id={`level-${workshop.id}`}
+                    value={workshopData.level}
+                    aria-label="Niveau"
+                    name="level"
+                    onChange={handleInputChange}
+                  >
+                    <option value="Débutant">Débutant</option>
+                    <option value="Intermédiaire">Intermédiaire</option>
+                    <option value="Avancé">Avancé</option>
+                  </select>
+                ) : (
+                  <span>Niveau: {workshop.level}</span>
+                )}
+              </div>
+              <div className="cardContent">
+                {editWorkshop === workshop.id ? (
+                  <input
+                    id={`location-${workshop.id}`}
+                    type="number"
+                    value={workshopData.locationId}
+                    aria-label="Lieu"
+                    name="locationId"
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  <span>Lieu: {workshop.locationId}</span>
+                )}
+              </div>
               <div className="cardActions">
+                {editWorkshop === workshop.id ? (
+                  <button type="button" onClick={() => handleSave(workshop.id)}>
+                    <img src={Valide} alt="Valider" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="btnIcon"
+                    onClick={() => handleEdit(workshop)}
+                  >
+                    <img src={Edit} alt="Modifier" />
+                  </button>
+                )}
                 <button
                   type="button"
                   className="btnIcon"
                   onClick={() => handleDeleteWorkshop(workshop.id)}
                 >
                   <img src={Trash} alt="Supprimer" />
-                </button>
-                <button
-                  type="button"
-                  className="btnIcon"
-                  onClick={() => handleEdit(workshop.id)}
-                >
-                  <img src={Edit} alt="Modifier" />
                 </button>
               </div>
             </div>

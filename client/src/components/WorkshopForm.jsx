@@ -67,16 +67,11 @@ export default function WorkshopForm({ onSubmit, onClose }) {
           required
         />
       </label>
-      <label>
-        Niveau:
-        <input
-          type="text"
-          name="level"
-          value={level}
-          onChange={handleChange}
-          required
-        />
-      </label>
+      <select name="level" value={level} onChange={handleChange} required>
+        <option value="Débutant">Débutant</option>
+        <option value="Intermédiaire">Intermédiaire</option>
+        <option value="Avancé">Avancé</option>
+      </select>
       <label>
         Lieu:
         <input
