@@ -2,15 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { WorkshopProvider } from "./services/WorkshopContext";
 
 import App from "./App";
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
-import {
-  getStudents,
-  getWorkshopByLevel,
-  getWorkshops,
-} from "./services/request";
+import { getWorkshopByLevel, getWorkshops } from "./services/request";
 import Dashboard from "./pages/Dashboard";
 
 const router = createBrowserRouter([
@@ -36,7 +33,6 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
-        loader: getStudents,
       },
     ],
   },
@@ -46,6 +42,8 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <WorkshopProvider>
+      <RouterProvider router={router} />
+    </WorkshopProvider>
   </React.StrictMode>
 );
