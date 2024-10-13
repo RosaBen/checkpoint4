@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import "./styles/App.css";
 import "./styles/dashboard.css";
 import "./styles/navbar.css";
+import "./styles/form.css";
 
 function App() {
   return (

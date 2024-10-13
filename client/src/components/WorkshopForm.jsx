@@ -36,56 +36,62 @@ export default function WorkshopForm({ onSubmit, onClose }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Date:
-        <input
-          type="date"
-          name="workshopDate"
-          value={workshopDate}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Heure:
-        <input
-          type="time"
-          name="workshopTime"
-          value={workshopTime}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Durée:
-        <input
-          type="number"
-          name="duration"
-          value={duration}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <select name="level" value={level} onChange={handleChange} required>
-        <option value="Débutant">Débutant</option>
-        <option value="Intermédiaire">Intermédiaire</option>
-        <option value="Avancé">Avancé</option>
-      </select>
-      <label>
-        Lieu:
-        <input
-          type="number"
-          name="locationId"
-          value={locationId}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <button type="submit">Valider</button>
-      <button type="button" onClick={onClose}>
-        Annuler
-      </button>
+    <form onSubmit={handleSubmit} className="containerForm">
+      <div className="containerContent">
+        <label>
+          Date:
+          <input
+            type="date"
+            name="workshopDate"
+            value={workshopDate}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Heure:
+          <input
+            type="time"
+            name="workshopTime"
+            value={workshopTime}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Durée:
+          <input
+            type="number"
+            name="duration"
+            value={duration}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <select name="level" value={level} onChange={handleChange} required>
+          <option value="Débutant">Débutant</option>
+          <option value="Intermédiaire">Intermédiaire</option>
+          <option value="Avancé">Avancé</option>
+        </select>
+        <label>
+          Lieu:
+          <input
+            type="number"
+            name="locationId"
+            value={locationId}
+            onChange={handleChange}
+            required
+          />
+        </label>
+      </div>
+      <div className="btnFormContainer">
+        <button type="submit" className="btnForm">
+          Valider
+        </button>
+        <button type="button" onClick={onClose} className="btnForm">
+          Annuler
+        </button>
+      </div>
     </form>
   );
 }
