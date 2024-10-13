@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 
-export default function NavBar() {
+export default function Navbar() {
   return (
     <nav>
-      <button type="button" className="navBtn">
-        <Link to="/dashboard">Tableau de Bord</Link>
+      <button type="button" className="btnNavbar">
+        <Link to="/">Accueil</Link>
       </button>
-      <button type="button" className="navBtn">
-        <Link to="/bookings">Réservation</Link>
+
+      <button type="button" className="btnNavbar">
+        <Link to="/dashboard">Gestion</Link>
       </button>
     </nav>
   );

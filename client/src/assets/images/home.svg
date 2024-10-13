@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="24px" height="23.999634px" viewBox="0 0 24 23.999634" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1" id="gradient_1">
+      <stop offset="23.595507%" stop-color="#2B2970" />
+      <stop offset="100%" stop-color="#CE812D" />
+    </linearGradient>
+    <path d="M-838 -1553C-838.109 -1553 -838.217 -1552.96 -838.31 -1552.89L-849.809 -1543.51C-850.024 -1543.34 -850.064 -1543.01 -849.894 -1542.78C-849.724 -1542.55 -849.41 -1542.51 -849.19 -1542.69L-848.5 -1543.25L-848.5 -1529.52C-848.5 -1529.24 -848.275 -1529 -848 -1529L-841 -1529L-841 -1538.4L-835 -1538.4L-835 -1529L-828 -1529C-827.725 -1529 -827.5 -1529.24 -827.5 -1529.52L-827.5 -1543.25L-826.81 -1542.69C-826.715 -1542.62 -826.61 -1542.58 -826.5 -1542.58C-826.35 -1542.58 -826.206 -1542.65 -826.106 -1542.78C-825.936 -1543.01 -825.976 -1543.34 -826.191 -1543.51L-837.69 -1552.89C-837.783 -1552.96 -837.891 -1553 -838 -1553L-838 -1553ZM-833 -1550.94L-833 -1550.39L-830 -1547.94L-830 -1550.94L-833 -1550.94L-833 -1550.94Z" id="path_1" />
+    <clipPath id="clip_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="Shape">
+    <use stroke="none" fill="#FFFFFF" xlink:href="#path_1" fill-rule="evenodd" />
+    <g clip-path="url(#clip_1)">
+      <use xlink:href="#path_1" fill="none" stroke="url(#gradient_1)" stroke-width="2" />
+    </g>
+  </g>
+</svg>

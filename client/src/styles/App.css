@@ -3,6 +3,22 @@ body {
   line-height: 1.7;
   margin: 0;
   box-sizing: border-box;
+  padding: 20px;
+  background-color: rgb(202, 200, 200);
+}
+
+h1 {
+  color: #274086;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-color: #274086;
+  }
+  h1 {
+    color: #fff;
+  }
 }
 
 /* 

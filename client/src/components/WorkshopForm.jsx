@@ -1,119 +1,101 @@
-import { useContext, usestate, useEffect } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
-import { WorkshopContext } from "../services/WorkshopContext";
-import { addWorkshop, editWorkshop } from "../services/request";
-import dateTimeFormat from "../services/dateTimeFormat";
 
-export default function WorkshopForm({ workshop, onClose }) {
-  const { setWorkshops } = useContext(WorkshopContext);
-  const [formData, setFormData] = usestate({
-    workshopDate: "",
-    workshopTime: "",
-    duration: "",
-    level: "",
-  });
+export default function WorkshopForm({ onSubmit, onClose }) {
+  const [workshopDate, setWorkshopDate] = useState("");
+  const [workshopTime, setWorkshopTime] = useState("");
+  const [duration, setDuration] = useState(45);
+  const [level, setLevel] = useState("Débutant");
+  const [locationId, setLocationId] = useState(1);
 
-  useEffect(() => {
-    setFormData({
-      workshopDate: dateTimeFormat(workshop.workshopDate),
-      workshopTime: dateTimeFormat(workshop.workshopTime),
-      duration: workshop.duration,
-      level: workshop.level,
-    });
-  }, [workshop, setFormData]);
-
-  function handleChange(e) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  WorkshopForm.propTypes = {
-    workshop: PropTypes.shape({
-      id: PropTypes.number,
-      workshopDate: PropTypes.string,
-      workshopTime: PropTypes.string,
-      duration: PropTypes.string,
-      level: PropTypes.string,
-    }).isRequired,
-    onClose: PropTypes.func.isRequired,
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "workshopDate") {
+      setWorkshopDate(value);
+    } else if (name === "workshopTime") {
+      setWorkshopTime(value);
+    } else if (name === "duration") {
+      setDuration(value);
+    } else if (name === "level") {
+      setLevel(value);
+    } else if (name === "locationId") {
+      setLocationId(value);
+    }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    const formattedDate = `${formData.workshopDate}T${formData.workshopTime}`;
-
-    const formattedWorkshop = {
-      ...formData,
-      workshopDate: formattedDate,
-      workshopTime: formattedDate,
-    };
-
-    try {
-      if (workshop.id) {
-        const updatedWorkshop = await editWorkshop(
-          workshop.id,
-          formattedWorkshop
-        );
-        setWorkshops((prevWorkshops) =>
-          prevWorkshops.map((w) =>
-            w.id === updatedWorkshop.id ? updatedWorkshop : w
-          )
-        );
-      } else {
-        const newWorkshop = await addWorkshop(formattedWorkshop);
-        setWorkshops((prevWorkshops) => [...prevWorkshops, newWorkshop]);
-      }
-
-      onClose();
-    } catch (error) {
-      console.error(error);
-    }
+    onSubmit({
+      workshopDate,
+      workshopTime,
+      duration,
+      level,
+      locationId,
+    });
+    onClose();
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="workshopDate">Date</label>
-      <input
-        type="date"
-        id="workshopDate"
-        name="workshopDate"
-        value={formData.workshopDate}
-        onChange={handleChange}
-      />
-      <label htmlFor="workshopTime">Heure</label>
-      <input
-        type="time"
-        id="workshopTime"
-        name="workshopTime"
-        value={formData.workshopTime}
-        onChange={handleChange}
-      />
-      <label htmlFor="duration">Durée</label>
-      <input
-        type="number"
-        id="duration"
-        name="duration"
-        value={formData.duration}
-        onChange={handleChange}
-      />
-      <label htmlFor="level">Niveau</label>
-      <select
-        id="level"
-        name="level"
-        value={formData.level}
-        onChange={handleChange}
-      >
-        <option value="débutant">Débutant</option>
-        <option value="intermédiaire">Intermédiaire</option>
-        <option value="avancé">Avancé</option>
-      </select>
-      <button type="submit">Enregistrer</button>
+      <label>
+        Date:
+        <input
+          type="date"
+          name="workshopDate"
+          value={workshopDate}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Heure:
+        <input
+          type="time"
+          name="workshopTime"
+          value={workshopTime}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Durée:
+        <input
+          type="number"
+          name="duration"
+          value={duration}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Niveau:
+        <input
+          type="text"
+          name="level"
+          value={level}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Lieu:
+        <input
+          type="number"
+          name="locationId"
+          value={locationId}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <button type="submit">Valider</button>
       <button type="button" onClick={onClose}>
         Annuler
       </button>
     </form>
   );
 }
+
+WorkshopForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};

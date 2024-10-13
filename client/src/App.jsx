@@ -1,14 +1,15 @@
 import { Outlet } from "react-router-dom";
 
-import NavBar from "./components/NavBar";
-import "./App.css";
-import "./styles/booking.css";
-import "./styles/calendar.css";
+import Navbar from "./components/Navbar";
+
+import "./styles/App.css";
+import "./styles/dashboard.css";
+import "./styles/navbar.css";
 
 function App() {
   return (
     <main className="container">
-      <NavBar />
+      <Navbar />
       <Outlet />
     </main>
   );

@@ -23,20 +23,6 @@ export function getWorkshop(id) {
     .catch((error) => console.info(error));
 }
 
-export function getStudents() {
-  return myAxios
-    .get("/students")
-    .then((response) => response.data.result)
-    .catch((error) => console.info(error));
-}
-
-export function getStudent(id) {
-  return myAxios
-    .get(`/students/${id}`)
-    .then((response) => response.data.result)
-    .catch((error) => console.info(error));
-}
-
 export function getLocation() {
   return myAxios
     .get("/locations")
@@ -58,6 +44,15 @@ export function addWorkshop(workshop) {
 export function editWorkshop(workshop) {
   return myAxios
     .put(`/workshops/${workshop.id}`, workshop)
+    .then((response) => response.data)
+    .catch((error) => console.info(error));
+}
+
+// ##### *** DELETE *** ##### \\
+
+export function deleteWorkshop(id) {
+  return myAxios
+    .delete(`/workshops/${id}`)
     .then((response) => response.data)
     .catch((error) => console.info(error));
 }

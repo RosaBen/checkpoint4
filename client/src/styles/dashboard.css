@@ -1,0 +1,169 @@
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.containerDashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+.tableDashboard {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ff4500, #ffa500);
+  border-radius: 15px;
+}
+
+.theadDashboard {
+  background-color: #274086;
+  color: white;
+}
+
+.trDashboard {
+  height: 50px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+}
+
+.thId,
+.thDate,
+.thHour,
+.thDuration,
+.thLevel,
+.thLocation {
+  border-bottom: 2px solid #274086;
+}
+
+.thDate {
+  width: 250px;
+}
+
+.thHour {
+  width: 100px;
+}
+
+.thDuration {
+  width: 60px;
+}
+
+.thLevel {
+  width: 150px;
+}
+
+.thLocation {
+  width: 300px;
+}
+
+.btnDashboard {
+  background-color: #ff4500;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: border-radius 0.5s;
+}
+
+.btnDashboard:hover {
+  border-radius: 50px;
+}
+
+.btnDashboard img {
+  vertical-align: middle;
+}
+
+.btnIcon {
+  background: linear-gradient(135deg, #ff4500, #ffa500);
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition:
+    border-radius 0.5s,
+    border 0.5s;
+}
+
+.btnIcon:hover {
+  border-radius: 50px;
+  border: 2px solid #274086;
+}
+
+input[type="date"],
+input[type="time"],
+input[type="number"],
+select {
+  padding: 8px;
+  border: 1px solid #274086;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 250px;
+  box-sizing: border-box;
+}
+
+input[type="date"],
+input[type="time"] {
+  max-width: 200px;
+}
+
+input[type="number"] {
+  max-width: 60px;
+}
+
+select {
+  max-width: 150px;
+}
+
+@media (min-width: 769px) {
+  .cardsDashboard {
+    display: none;
+  }
+  .tableDashboard {
+    display: table;
+  }
+}
+
+@media (max-width: 768px) {
+  .tableDashboard {
+    display: none;
+  }
+
+  .body {
+    background-color: #274086;
+  }
+
+  .cardDashboard {
+    border: 3px solid #274086;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .containerDashboard {
+    background: linear-gradient(135deg, #ff4500, #ffa500);
+    opacity: 0.9;
+    border-radius: 15px;
+    padding: 20px;
+  }
+
+  .cardTitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .cardContent {
+    margin-bottom: 10px;
+  }
+
+  .cardActions {
+    display: flex;
+    justify-content: space-between;
+  }
+}
