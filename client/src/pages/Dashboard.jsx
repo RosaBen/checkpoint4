@@ -77,128 +77,144 @@ export default function Dashboard() {
         </button>
       </div>
       <div className="containerDashboard">
-        <table className="tableDashboard">
-          <thead className="theadDashboard">
-            <tr className="trDashboard">
-              <th className="thId">ID</th>
-              <th className="thDate">Date</th>
-              <th className="thHour">Heure</th>
-              <th className="thDuration">Durée</th>
-              <th className="thLevel">Niveau</th>
-              <th className="thLocation">Lieu</th>
-              <th className="thDelete">Supprimer</th>
-              <th className="thEdit">Modifier</th>
-            </tr>
-          </thead>
-          <tbody>
-            {workshops.map((workshop) => (
-              <tr key={workshop.id}>
-                <td>{workshop.id}</td>
-                <td>
-                  {editWorkshop === workshop.id ? (
-                    <input
-                      id={`date-${workshop.id}`}
-                      type="date"
-                      name="workshopDate"
-                      value={workshopData.workshopDate}
-                      onChange={handleInputChange}
-                      aria-label="Date"
-                    />
-                  ) : (
-                    workshop.workshopDate
-                  )}
-                </td>
-                <td>
-                  {editWorkshop === workshop.id ? (
-                    <input
-                      id={`time-${workshop.id}`}
-                      type="time"
-                      name="workshopTime"
-                      value={workshopData.workshopTime}
-                      onChange={handleInputChange}
-                      aria-label="Heure"
-                    />
-                  ) : (
-                    workshop.workshopTime
-                  )}
-                </td>
-                <td>
-                  {editWorkshop === workshop.id ? (
-                    <input
-                      id={`duration-${workshop.id}`}
-                      type="number"
-                      name="duration"
-                      value={workshopData.duration}
-                      onChange={handleInputChange}
-                      aria-label="Durée"
-                    />
-                  ) : (
-                    workshop.duration
-                  )}
-                </td>
-                <td>
-                  {editWorkshop === workshop.id ? (
-                    <select
-                      id={`level-${workshop.id}`}
-                      name="level"
-                      value={workshopData.level}
-                      onChange={handleInputChange}
-                    >
-                      <option value="Débutant">Débutant</option>
-                      <option value="Intermédiaire">Intermédiaire</option>
-                      <option value="Avancé">Avancé</option>
-                    </select>
-                  ) : (
-                    workshop.level
-                  )}
-                </td>
-                <td>
-                  {editWorkshop === workshop.id ? (
-                    <input
-                      id={`location-${workshop.id}`}
-                      type="number"
-                      name="locationId"
-                      value={workshopData.locationId}
-                      aria-label="Lieu"
-                      onChange={handleInputChange}
-                    />
-                  ) : (
-                    workshop.locationId
-                  )}
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    className="btnIcon"
-                    onClick={() => handleDeleteWorkshop(workshop.id)}
-                  >
-                    <img src={Trash} alt="Supprimer" />
-                  </button>
-                </td>
-                <td>
-                  {editWorkshop === workshop.id ? (
-                    <button
-                      type="button"
-                      className="btnIcon"
-                      onClick={() => handleSave(workshop.id)}
-                    >
-                      <img src={Valide} alt="Valider" />
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className="btnIcon"
-                      onClick={() => handleEdit(workshop)}
-                    >
-                      <img src={Edit} alt="Modifier" />
-                    </button>
-                  )}
-                </td>
+        <section>
+          <table className="tableDashboard">
+            <thead className="theadDashboard">
+              <tr className="trDashboard">
+                <th className="thId">ID</th>
+                <th className="thDate">Date</th>
+                <th className="thHour">Heure</th>
+                <th className="thDuration">Durée</th>
+                <th className="thLevel">Niveau</th>
+                <th className="thLocation">Lieu</th>
+                <th className="thDelete">Supprimer</th>
+                <th className="thEdit">Modifier</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="cardsDashboard">
+            </thead>
+            <tbody>
+              {workshops.map((workshop) => (
+                <tr key={workshop.id}>
+                  <td>{workshop.id}</td>
+                  <td>
+                    {editWorkshop === workshop.id ? (
+                      <input
+                        id={`date-${workshop.id}`}
+                        type="date"
+                        name="workshopDate"
+                        value={workshopData.workshopDate}
+                        onChange={handleInputChange}
+                        aria-label="Date"
+                      />
+                    ) : (
+                      workshop.workshopDate
+                    )}
+                  </td>
+                  <td>
+                    {editWorkshop === workshop.id ? (
+                      <input
+                        id={`time-${workshop.id}`}
+                        type="time"
+                        name="workshopTime"
+                        value={workshopData.workshopTime}
+                        onChange={handleInputChange}
+                        aria-label="Heure"
+                      />
+                    ) : (
+                      workshop.workshopTime
+                    )}
+                  </td>
+                  <td>
+                    {editWorkshop === workshop.id ? (
+                      <input
+                        id={`duration-${workshop.id}`}
+                        type="number"
+                        name="duration"
+                        value={workshopData.duration}
+                        onChange={handleInputChange}
+                        aria-label="Durée"
+                      />
+                    ) : (
+                      workshop.duration
+                    )}
+                  </td>
+                  <td>
+                    {editWorkshop === workshop.id ? (
+                      <select
+                        id={`level-${workshop.id}`}
+                        name="level"
+                        value={workshopData.level}
+                        onChange={handleInputChange}
+                      >
+                        <option value="Débutant">Débutant</option>
+                        <option value="Intermédiaire">Intermédiaire</option>
+                        <option value="Avancé">Avancé</option>
+                      </select>
+                    ) : (
+                      workshop.level
+                    )}
+                  </td>
+                  <td>
+                    {editWorkshop === workshop.id ? (
+                      <input
+                        id={`location-${workshop.id}`}
+                        type="number"
+                        name="locationId"
+                        value={workshopData.locationId}
+                        aria-label="Lieu"
+                        onChange={handleInputChange}
+                      />
+                    ) : (
+                      workshop.locationId
+                    )}
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btnIcon"
+                      onClick={() => handleDeleteWorkshop(workshop.id)}
+                    >
+                      <img src={Trash} alt="Supprimer" />
+                    </button>
+                  </td>
+                  <td>
+                    {editWorkshop === workshop.id ? (
+                      <button
+                        type="button"
+                        className="btnIcon"
+                        onClick={() => handleSave(workshop.id)}
+                      >
+                        <img src={Valide} alt="Valider" />
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="btnIcon"
+                        onClick={() => handleEdit(workshop)}
+                      >
+                        <img src={Edit} alt="Modifier" />
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {showForm && (
+            <WorkshopForm
+              workshop={selectedWorkshop || {}}
+              onClose={handleClose}
+              onSubmit={handleAddWorkshop}
+            />
+          )}
+        </section>
+        <section className="cardsDashboard">
+          {showForm && (
+            <WorkshopForm
+              workshop={selectedWorkshop || {}}
+              onClose={handleClose}
+              onSubmit={handleAddWorkshop}
+            />
+          )}
           {workshops.map((workshop) => (
             <div className="cardDashboard" key={workshop.id}>
               <div className="cardTitle">Workshop: {workshop.id}</div>
@@ -299,15 +315,8 @@ export default function Dashboard() {
               </div>
             </div>
           ))}
-        </div>
+        </section>
       </div>
-      {showForm && (
-        <WorkshopForm
-          workshop={selectedWorkshop || {}}
-          onClose={handleClose}
-          onSubmit={handleAddWorkshop}
-        />
-      )}
     </div>
   );
 }
