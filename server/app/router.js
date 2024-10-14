@@ -2,9 +2,19 @@ const express = require("express");
 
 const router = express.Router();
 
+const upload = require("./services/upload");
+
 /* ************************************************************************* */
 // Define Your API Routes Here
 /* ************************************************************************* */
+// **INSTRUCTORS** \\
+const instructors = require("./controllers/instructorActions");
+
+router.get("/instructors", instructors.browse);
+router.get("/instructors/:id", instructors.read);
+router.post("/instructors", upload.uploadInstructor, instructors.add);
+router.put("/instructors/:id", upload.uploadInstructor, instructors.edit);
+router.delete("/instructors/:id", instructors.destroy);
 
 // **STUDENTS** \\
 const students = require("./controllers/studentActions");

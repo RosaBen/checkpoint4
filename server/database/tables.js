@@ -2,6 +2,7 @@
 const StudentRepository = require("./models/StudentRepository");
 const WorkshopRepository = require("./models/WorkshopRepository");
 const LocationRepository = require("./models/LocationRepository");
+const InstructorRepository = require("./models/InstructorRepository");
 
 // Create an empty object to hold data repositories for different tables
 const tables = {};
@@ -14,6 +15,7 @@ const tables = {};
 tables.student = new StudentRepository();
 tables.location = new LocationRepository();
 tables.workshop = new WorkshopRepository();
+tables.instructor = new InstructorRepository();
 
 /* ************************************************************************* */
 

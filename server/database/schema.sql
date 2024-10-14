@@ -15,6 +15,16 @@ CREATE TABLE student (
     ) NOT NULL
 );
 
+CREATE TABLE instructor (
+    id int PRIMARY KEY AUTO_INCREMENT,
+    lastname VARCHAR(100) NOT NULL,
+    firstname VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(100) NOT NULL,
+    description Text,
+    photo text
+);
+
 CREATE TABLE location (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     room VARCHAR(100),
@@ -137,3 +147,29 @@ VALUES (
     );
 
 INSERT INTO attending (studentId, workshopId) VALUES (1, 1), (2, 2);
+
+INSERT INTO
+    instructor (
+        lastname,
+        firstname,
+        email,
+        phone,
+        description,
+        photo
+    )
+VALUES (
+        'Lounis',
+        'Rosa',
+        'rosa@gmail.com',
+        '0642222222',
+        'I am a professional rollerdancer',
+        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F840836192688013%2F&psig=AOvVaw3Q'
+    ),
+    (
+        'Doe',
+        'John',
+        'john@gmail.com',
+        '0642222222',
+        'I am a professional slalomer',
+        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F840836192688013%2F&psig=AOvVaw3Q'
+    );
