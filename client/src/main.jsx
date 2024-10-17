@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { WorkshopProvider } from "./services/WorkshopContext";
 
+import { getInstructors } from "./services/request";
+
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 
@@ -16,6 +18,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+        loader: getInstructors,
       },
       {
         path: "/dashboard",
